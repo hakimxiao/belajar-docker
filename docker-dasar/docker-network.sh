@@ -52,18 +52,6 @@ docker network rm contohnetwork
 
 # ==========================================================================================================================================
 
-# MENGHUBUNGKAN CONTAINER KE NETWORK SAAT DIBUAT
-    # Container akan langsung masuk ke network yang kita tentukan.
-docker container create --name mongonetwork --network contohnetwork --env MONGO_INITDB_ROOT_USERNAME="admin" --env MONGO_INITDB_ROOT_PASSWORD="admin123" mongo:latest
-
-# MENGHUBUNGKAN CONTAINER YANG SUDAH ADA KE NETWORK
-docker network connect contohnetwork mongonetwork
-
-# MELEPASKAN CONTAINER DARI NETWORK
-docker network disconnect contohnetwork mongonetwork
-
-# ==========================================================================================================================================
-
 # NETWORK DRIVER
     # Network driver adalah jenis atau cara kerja network di Docker.
     # Driver menentukan bagaimana container berkomunikasi.
@@ -124,21 +112,6 @@ docker network create --driver overlay overlaynetwork
     # Container bisa punya alamat IP sendiri di jaringan yang sama dengan host.
     #
     # Cocok untuk kebutuhan jaringan lanjutan, misalnya container harus terlihat seperti mesin terpisah.
-
-# ==========================================================================================================================================
-
-# CONTOH KASUS: APLIKASI DAN DATABASE DALAM SATU NETWORK
-    # 1. Buat network
-docker network create appnetwork
-
-    # 2. Buat container database di network tersebut
-docker container create --name mongodb --network appnetwork --env MONGO_INITDB_ROOT_USERNAME="admin" --env MONGO_INITDB_ROOT_PASSWORD="admin123" mongo:latest
-
-    # 3. Buat container lain di network yang sama
-docker container create --name nginxapp --network appnetwork nginx:latest
-
-    # Karena keduanya berada di network yang sama,
-    # container nginxapp bisa mengenali container mongodb dengan nama "mongodb".
 
 # ==========================================================================================================================================
 
